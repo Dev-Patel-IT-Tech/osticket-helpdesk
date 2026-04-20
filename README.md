@@ -4,10 +4,10 @@
 
 Deployed and administered a full-stack help desk
 environment on Microsoft Azure. Configured IIS 10,
-PHP 7.3.8, and MySQL 5.5.62 from scratch, then
-administered osTicket v1.15.8 across SLA design,
+PHP 7.3.8, and MySQL 5.5.62 from scratch and
+administered osTicket v1.15.8 including SLA design,
 role-based access control, department routing, and
-ticket lifecycle operations.
+complete ticket lifecycle management.
 
 ## Environment
 
@@ -63,17 +63,17 @@ Created the osTicket database using HeidiSQL.
 
 ## Configuration
 
-Extracted osTicket into the IIS web root and ran
-the browser-based installer. Three PHP extensions
-were not enabled by default.
+Extracted osTicket into the IIS web root and
+completed the browser-based installer. Three PHP
+extensions were not enabled by default and were
+activated via IIS PHP Manager.
 
 Before enabling extensions:
 
 ![Before](screenshots/ss09-osticket-prereq-before.png)
 
 Enabled php_imap.dll, php_intl.dll, and
-php_opcache.dll via IIS PHP Manager.
-All required checks passing.
+php_opcache.dll. All required checks passing.
 
 After enabling extensions:
 
@@ -84,20 +84,20 @@ database connectivity confirmed.
 
 ![Installation Complete](screenshots/ss12-osticket-installed-success.png)
 
-Post-installation steps:
+Post-installation hardening applied:
 - Setup directory permanently deleted
 - ost-config.php restricted to read-only
 - Anonymous ticket creation disabled
 
 ## System Administration
 
-Logged in as admin. System logs confirm
-installation timestamp and initial activity.
+Logged in to the Admin Control Panel. System logs
+confirm installation timestamp and system activity.
 
 ![Admin Dashboard](screenshots/ss13-admin-panel-dashboard.png)
 
-Configured three SLA tiers based on business
-impact and response urgency.
+Configured three SLA tiers aligned with business
+impact and response requirements.
 
 | Tier | Response | Schedule | Scope |
 |------|----------|----------|-------|
@@ -107,10 +107,10 @@ impact and response urgency.
 
 ![SLA Configuration](screenshots/ss14-sla-configuration.png)
 
-Configured two departments with distinct access
-boundaries, three agents with defined permission
-profiles, and help topics covering standard
-ticket categories.
+Configured departments, agents, and help topics.
+SysAdmins and Support departments created with
+distinct permission boundaries. Three agents
+assigned with role-based access profiles.
 
 ![Departments](screenshots/ss15-departments.png)
 
@@ -123,9 +123,9 @@ ticket categories.
 Department-level permissions are enforced across
 all agent accounts. Agents only have visibility
 into tickets belonging to their assigned department.
-Escalation to a restricted department removes access
-for lower-privileged agents immediately, with no
-manual intervention required.
+Escalation to a restricted department removes
+access for lower-privileged agents immediately
+with no manual intervention required.
 
 ## Ticket Operations
 
@@ -165,7 +165,7 @@ access completely, not just edit rights.
 **Step 5: Resolution**
 
 Jane identified a backend server configuration
-error and initiated a restart.
+error and initiated a service restart.
 
 ![Investigation](screenshots/ss22a-jane-investigating-ticket.png)
 
@@ -181,16 +181,24 @@ Ticket closed with full audit trail retained.
 
 ## Observations
 
-The access denied on John's account confirmed
-department-level RBAC is enforced at the system
-level, not the ticket level. Once a ticket moves
-to a restricted department, lower-privileged agents
-lose visibility entirely. This is an important
-distinction in environments where sensitive
-escalations need to be protected from unauthorized
-access or modification.
+Department-level RBAC is enforced at the system
+level. Once a ticket moves to a restricted
+department, lower-privileged agents lose visibility
+entirely. This is a critical control in environments
+where sensitive escalations need to be protected
+from unauthorized access or modification.
 
-The Sev-A due date was set automatically to exactly
-one hour from ticket creation, confirming SLA
-enforcement is system-driven rather than manually
-applied.
+Sev-A due date was automatically set to one hour
+from ticket creation, confirming SLA enforcement
+is system-driven and not manually applied.
+
+## Skills
+
+Active Directory, Azure Virtual Machines,
+CompTIA A+, Desktop Support, DHCP, DNS,
+Help Desk Support, HeidiSQL, IIS,
+MySQL, osTicket, PHP, PowerShell,
+Remote Desktop Protocol, Role-Based Access Control,
+Service Desk, SLA Management, TCP/IP,
+Technical Support, Ticketing Systems,
+Windows 10, Windows 11
