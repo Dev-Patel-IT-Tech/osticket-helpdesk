@@ -1,12 +1,12 @@
 # osTicket Help Desk Deployment on Azure
 
-## Summary
+## Overview
 
-Deployed and administered a full-stack help desk 
-environment on Microsoft Azure. Configured the complete 
-server infrastructure, IIS 10, PHP 7.3.8, MySQL 5.5.62, 
-and administered osTicket v1.15.8 across SLA design, 
-role-based access control, department routing, and 
+Deployed and administered a full-stack help desk
+environment on Microsoft Azure. Configured IIS 10,
+PHP 7.3.8, and MySQL 5.5.62 from scratch, then
+administered osTicket v1.15.8 across SLA design,
+role-based access control, department routing, and
 ticket lifecycle operations.
 
 ## Environment
@@ -22,65 +22,82 @@ ticket lifecycle operations.
 | Application | osTicket v1.15.8 |
 | Access | Remote Desktop Protocol (RDP) |
 
-## Infrastructure Setup
+## Deployment
 
-Provisioned a Windows 10 VM in Azure within a dedicated 
-resource group and virtual network. Connected via RDP 
-and executed full server-side configuration.
+Provisioned a Windows 10 VM in Azure within a
+dedicated resource group and virtual network.
 
 ![Resource Group](screenshots/ss01-resource-group.png)
+
 ![VM Running](screenshots/ss02-vm-running.png)
+
+Connected via RDP and began server-side configuration.
+
 ![RDP Connected](screenshots/ss03-rdp-connected.png)
 
-Enabled IIS with CGI support, installed PHP Manager 
-and the URL Rewrite module, created C:\PHP and 
-extracted PHP 7.3.8 into it.
+Enabled IIS with CGI support. CGI is the only
+extension selected under Application Development,
+required for PHP to communicate with IIS via FastCGI.
 
 ![CGI Enabled](screenshots/ss04-iis-cgi-enabled.png)
+
+Confirmed IIS was operational by loading the
+default page at localhost.
+
 ![IIS Running](screenshots/ss05-iis-welcome-page.png)
+
+Created the C:\PHP directory and extracted
+PHP 7.3.8 into it.
+
 ![PHP Folder](screenshots/ss06-php-folder.png)
 
-Registered PHP 7.3.8 as the FastCGI handler in IIS 
-PHP Manager. Installed MySQL 5.5.62 and created the 
-osTicket database using HeidiSQL.
+Registered PHP 7.3.8 as the FastCGI handler
+in IIS PHP Manager. Handler mapping confirmed active.
 
 ![PHP Registered](screenshots/ss07-php-registered-iis.png)
+
+Installed MySQL 5.5.62 with standard configuration.
+Created the osTicket database using HeidiSQL.
+
 ![Database Created](screenshots/ss11-heidisql-database.png)
 
-## osTicket Installation
+## Configuration
 
-Extracted osTicket into the IIS web root. Three PHP 
-extensions were not enabled by default and were 
-activated via IIS PHP Manager.
+Extracted osTicket into the IIS web root and ran
+the browser-based installer. Three PHP extensions
+were not enabled by default.
 
 Before enabling extensions:
+
 ![Before](screenshots/ss09-osticket-prereq-before.png)
 
-After enabling php_imap.dll, php_intl.dll, 
-and php_opcache.dll:
+Enabled php_imap.dll, php_intl.dll, and
+php_opcache.dll via IIS PHP Manager.
+All required checks passing.
+
+After enabling extensions:
+
 ![After](screenshots/ss10-osticket-prereq-after.png)
 
-Completed browser-based installation with MySQL 
-database connection confirmed.
+Installation completed with full MySQL
+database connectivity confirmed.
 
 ![Installation Complete](screenshots/ss12-osticket-installed-success.png)
 
-Post-installation steps completed:
-- Setup directory permanently removed
+Post-installation steps:
+- Setup directory permanently deleted
 - ost-config.php restricted to read-only
 - Anonymous ticket creation disabled
 
-## Admin Panel
+## System Administration
 
-Logged in as admin. System logs confirm installation 
-date and initial system activity.
+Logged in as admin. System logs confirm
+installation timestamp and initial activity.
 
 ![Admin Dashboard](screenshots/ss13-admin-panel-dashboard.png)
 
-## SLA Configuration
-
-Three-tier SLA structure configured based on 
-business impact:
+Configured three SLA tiers based on business
+impact and response urgency.
 
 | Tier | Response | Schedule | Scope |
 |------|----------|----------|-------|
@@ -90,78 +107,90 @@ business impact:
 
 ![SLA Configuration](screenshots/ss14-sla-configuration.png)
 
-## Departments, Agents, and Help Topics
-
-Configured two departments (SysAdmins and Support), 
-three agents with distinct permission profiles, 
-and help topics covering common ticket categories.
+Configured two departments with distinct access
+boundaries, three agents with defined permission
+profiles, and help topics covering standard
+ticket categories.
 
 ![Departments](screenshots/ss15-departments.png)
+
 ![Agents](screenshots/ss16-agents-jane-john.png)
+
 ![Help Topics](screenshots/ss17-help-topics.png)
 
-## Ticket Lifecycle: Banking System Outage (Sev-A)
+## Access Control
+
+Department-level permissions are enforced across
+all agent accounts. Agents only have visibility
+into tickets belonging to their assigned department.
+Escalation to a restricted department removes access
+for lower-privileged agents immediately, with no
+manual intervention required.
+
+## Ticket Operations
 
 **Step 1: End-user submits ticket**
 
-Karen reported the entire online banking system 
-was down and tellers could not log in.
+Karen reported the entire online banking system
+was down and branch tellers could not authenticate.
 
-![Ticket Created](screenshots/ss18b-creating-ticket-enduser.png)
+![Ticket Submitted](screenshots/ss18-creating-ticket-enduser.png)
 
 **Step 2: Agent John receives ticket**
 
-Ticket arrived in John's queue with no SLA, 
+Ticket arrived with Normal priority, no SLA,
 no department, and no assignment.
 
-![Queue View](screenshots/ss19a-ticket-unassigned-queue.png)
-![Ticket Open](screenshots/ss19b-ticket-unassigned-queue_.png)
+![Queue View](screenshots/ss19a-ticket-unassigned-queue%20.png)
+
+![Ticket Open](screenshots/ss19b-ticket-unassigned-queue%20.png)
 
 **Step 3: Triage and escalation**
 
-Priority set to Emergency, SLA set to Sev-A, 
-routed to SysAdmins department, assigned to Jane Doe.
+Priority set to Emergency. SLA set to Sev-A,
+enforcing a 1-hour response window. Routed to
+SysAdmins and assigned to Jane Doe.
 
 ![Triaged](screenshots/ss20-ticket-sev-a-assigned.png)
 
-**Step 4: RBAC enforcement**
+**Step 4: Access control enforcement**
 
-After routing to SysAdmins, John's account received 
-access denied. The ticket disappeared from his queue 
-entirely because his role does not include SysAdmins 
-department access.
+After routing to SysAdmins, John received a hard
+access denied. The ticket was no longer visible
+in his queue. Department-level RBAC blocked
+access completely, not just edit rights.
 
 ![Access Denied](screenshots/ss21-ticket-inaccessible-john.png)
 
-**Step 5: Resolution by Jane**
+**Step 5: Resolution**
 
-Jane investigated, identified a backend server 
-configuration issue, restarted the service, 
-confirmed restoration with Karen, and closed the ticket.
+Jane identified a backend server configuration
+error and initiated a restart.
 
-![Investigation Note](screenshots/ss22a-jane-investigating-ticket.png)
-![Resolution Note](screenshots/ss22b-jane-resolving-ticket.png)
-![Ticket Closed](screenshots/ss22c-ticket-closing-popup.png)
+![Investigation](screenshots/ss22a-jane-investigating-ticket.png)
+
+Service restored. User confirmed access recovered.
+
+![Resolution](screenshots/ss22b-jane-resolving-ticket.png)
+
+Ticket closed with full audit trail retained.
+
+![Closed](screenshots/ss22c-ticket-closing-popup.png)
+
 ![Closure Confirmed](screenshots/ss22d-ticket-closed-confirmed.png)
 
-## What I Took Away
+## Observations
 
-The access denied on John's account was the most 
-useful outcome of this project. It is easy to 
-understand RBAC in theory. Watching a ticket vanish 
-from an agent's queue the moment it escalates to a 
-department they cannot access made it concrete. 
-In a real environment that boundary is what stops 
-lower-level agents from touching sensitive escalations.
+The access denied on John's account confirmed
+department-level RBAC is enforced at the system
+level, not the ticket level. Once a ticket moves
+to a restricted department, lower-privileged agents
+lose visibility entirely. This is an important
+distinction in environments where sensitive
+escalations need to be protected from unauthorized
+access or modification.
 
-The Sev-A due date appearing as exactly one hour 
-from ticket creation confirmed the SLA configuration 
-was enforced at the system level, not just as a label.
-
-## Skills Demonstrated
-
-Azure IaaS provisioning, IIS web server administration, 
-PHP FastCGI configuration, MySQL database management, 
-ITSM platform deployment, SLA design and enforcement, 
-role-based access control, ticket lifecycle management, 
-remote system administration, security hardening
+The Sev-A due date was set automatically to exactly
+one hour from ticket creation, confirming SLA
+enforcement is system-driven rather than manually
+applied.
