@@ -192,13 +192,10 @@ Sev-A due date was automatically set to one hour
 from ticket creation, confirming SLA enforcement
 is system-driven and not manually applied.
 
-## Skills
+## Technical Skills Demonstrated
 
-Active Directory, Azure Virtual Machines,
-CompTIA A+, Desktop Support, DHCP, DNS,
-Help Desk Support, HeidiSQL, IIS,
-MySQL, osTicket, PHP, PowerShell,
-Remote Desktop Protocol, Role-Based Access Control,
-Service Desk, SLA Management, TCP/IP,
-Technical Support, Ticketing Systems,
-Windows 10, Windows 11
+Azure IaaS provisioning · IIS web server administration ·  
+PHP FastCGI configuration · MySQL database management ·  
+ITSM platform deployment · SLA design and enforcement ·  
+Role-based access control · Ticket lifecycle management ·  
+Remote system administration · Security hardening
