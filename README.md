@@ -194,8 +194,8 @@ is system-driven and not manually applied.
 
 ## Technical Skills Demonstrated
 
-Azure IaaS provisioning · IIS web server administration ·  
-PHP FastCGI configuration · MySQL database management ·  
-ITSM platform deployment · SLA design and enforcement ·  
-Role-based access control · Ticket lifecycle management ·  
-Remote system administration · Security hardening
+Azure IaaS provisioning, IIS web server administration,
+PHP FastCGI configuration, MySQL database management,
+ITSM platform deployment, SLA design and enforcement,
+role-based access control, ticket lifecycle management,
+remote system administration, security hardening
